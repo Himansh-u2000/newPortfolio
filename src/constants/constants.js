@@ -114,8 +114,13 @@ export const skills = [
         ],
     },
     {
-        title: "Machine Learning",
+        title: "AI & Machine Learning",
         skills: [
+            {
+                name: "N8N",
+                image:
+                    "https://n8n.io/brandguidelines/logo-dark.svg",
+            },
             {
                 name: "Python",
                 image:
@@ -129,7 +134,7 @@ export const skills = [
             {
                 name: "Google Colab",
                 image:
-                    "https://assets.stickpng.com/images/63c2e4c9c4baad4ce22bf9ef.png",
+                    "https://colab.google/static/images/icons/colab.png",
             },
         ],
     },
@@ -286,6 +291,26 @@ export const education = [
 export const projects = [
     {
         id: 0,
+        title: "GS Enterprises – MERN Admin Dashboard",
+        date: "September 2025",
+        description: "Built a secure full-stack MERN admin dashboard with role-based access, real-time data management, and image handling.",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/1.png",
+        tags: ["React", "Node.js", "Express", "MongoDB", "ImageKit", "JWT"],
+        github: "",
+        webapp: "https://gs-enterprises-git-6198c6-himanshuhaldar2000-gmailcoms-projects.vercel.app/",
+    },
+    {
+        id: 1,
+        title: "An AI-assisted research agent that fetches, summarizes, and prepares content for audio delivery. Created an automated workflow that aggregates data from reliable sources, summarizes it, and prepares audio-optimized content.",
+        date: "december 2025",
+        description: "An AI-assisted research agent that fetches, summarizes, and prepares content for audio delivery. Created an automated workflow that aggregates data from reliable sources, summarizes it, and prepares audio-optimized content.",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/Screenshot%202026-01-06%20033325.png",
+        tags: ["N8N", "Perplexity API", "Gemini API", "Audio Processing", "Content Summarization", "Audio Optimization", "ElevenLabs API"],
+        github: "",
+        webapp: "",
+    },
+    {
+        id: 2,
         title: "Agriguide – Crop Recommendation System",
         date: "Feb 2025 – Apr 2025",
         description:
@@ -296,7 +321,7 @@ export const projects = [
         github: "https://github.com/Himansh-u2000/agriguide",
     },
     {
-        id: 1,
+        id: 3,
         title: "Blog Quote || A Blogging Platform",
         date: "May 2025",
         description:
@@ -308,7 +333,7 @@ export const projects = [
         webapp: "https://himanshuhaldar.tech",
     },
     {
-        id: 2,
+        id: 4,
         title: "Personality Prediction App",
         date: "Aug 2024 – Dec 2024",
         description:
@@ -320,7 +345,7 @@ export const projects = [
         webapp: "https://personality-prediction-ebon.vercel.app/",
     },
     {
-        id: 3,
+        id: 5,
         title: "HIP HOP Popularity Prediction",
         date: "Feb 2025 – May 2025",
         description:
@@ -331,7 +356,7 @@ export const projects = [
         github: "https://github.com/Himansh-u2000/AI",
     },
     {
-        id: 4,
+        id: 6,
         title: "Emerginet – Accident Alert App",
         date: "Jul 2024",
         description:
@@ -342,7 +367,7 @@ export const projects = [
         github: "https://github.com/Himansh-u2000",
     },
     {
-        id: 5,
+        id: 7,
         title: "Notes App with Room DB",
         date: "Nov 2023",
         description:
@@ -353,7 +378,7 @@ export const projects = [
         github: "https://github.com/Himansh-u2000/SimpleNotesWithRoom",
     },
     {
-        id: 6,
+        id: 8,
         title: "Pencil Sketch App",
         date: "May 2025",
         description:

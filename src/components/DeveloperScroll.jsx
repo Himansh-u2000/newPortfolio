@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const TOTAL_FRAMES = 80;
-const SCROLL_HEIGHT = '250vh'; // Faster scroll with 80 frames
+const SCROLL_HEIGHT = '300vh'; // Faster scroll with 80 frames
 const FRAME_START_INDEX = 0;
 
 // Text overlay configuration
