@@ -1,56 +1,66 @@
 import DeveloperScroll from './components/DeveloperScroll';
+import Skills from './components/Skills';
+import Experience from './components/Experience';
+import Education from './components/Education';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import { Bio } from './constants/constants';
 import './index.css';
 
 function App() {
   return (
     <main className="bg-[#050505] min-h-screen">
+      {/* Hero Section with Scroll Animation */}
       <DeveloperScroll />
 
-      {/* Additional sections can be added below */}
-      <section id="projects" className="min-h-screen px-6 py-24 flex items-center justify-center">
-        <div className="text-center max-w-4xl">
-          <h2 className="text-4xl md:text-6xl font-light text-white/90 mb-8">
-            Featured Projects
-          </h2>
-          <p className="text-lg text-white/60">
-            Coming soon — your projects will appear here.
-          </p>
-        </div>
-      </section>
+      {/* Skills Section */}
+      <Skills />
 
-      <section id="contact" className="min-h-screen px-6 py-24 flex items-center justify-center">
-        <div className="text-center max-w-4xl">
-          <h2 className="text-4xl md:text-6xl font-light text-white/90 mb-8">
-            Get in Touch
-          </h2>
-          <p className="text-lg text-white/60 mb-12">
-            Ready to collaborate on something amazing?
-          </p>
-          <a
-            href="mailto:hello@himanshuhaldar.com"
-            className="cta-button-primary cta-button text-lg"
-          >
-            Say Hello
-          </a>
-        </div>
-      </section>
+      {/* Experience Timeline */}
+      <Experience />
+
+      {/* Education Section */}
+      <Education />
+
+      {/* Projects Grid */}
+      <Projects />
+
+      {/* Contact Section */}
+      <Contact />
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/40">
-            © {new Date().getFullYear()} Himanshu Haldar. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-white/80 transition-colors">
-              GitHub
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-white/80 transition-colors">
-              LinkedIn
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-white/80 transition-colors">
-              Twitter
-            </a>
+      <footer className="py-8 border-t border-white/10 bg-[#050505]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-white/40">
+              © {new Date().getFullYear()} {Bio.name}. Built with React & Framer Motion.
+            </p>
+            <div className="flex items-center gap-6">
+              <a
+                href={Bio.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/40 hover:text-white/80 transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href={Bio.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/40 hover:text-white/80 transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={Bio.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-white/40 hover:text-white/80 transition-colors"
+              >
+                Twitter
+              </a>
+            </div>
           </div>
         </div>
       </footer>

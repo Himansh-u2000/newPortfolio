@@ -379,11 +379,11 @@ export default function DeveloperScroll() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
                     >
-                        <span className="text-xs text-white/40 tracking-[0.2em] uppercase">
+                        <span className="text-xs text-white/50 tracking-[0.2em] uppercase">
                             Scroll
                         </span>
                         <motion.div
-                            className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent"
+                            className="w-px h-12 bg-linear-to-b from-white/90 to-transparent"
                             animate={{ scaleY: [1, 0.6, 1] }}
                             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                         />
