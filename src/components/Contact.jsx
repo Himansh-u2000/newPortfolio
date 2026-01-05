@@ -1,4 +1,6 @@
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { Bio } from '../constants/constants';
 
 const socialLinks = [
@@ -29,128 +31,283 @@ const socialLinks = [
             </svg>
         ),
     },
-    {
-        name: 'Email',
-        url: `mailto:${Bio.email}`,
-        icon: (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-        ),
-    },
 ];
 
 export default function Contact() {
+    const formRef = useRef();
+    const [formData, setFormData] = useState({
+        user_name: '',
+        user_email: '',
+        subject: '',
+        message: '',
+    });
+    const [status, setStatus] = useState({ type: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus({ type: '', message: '' });
+
+        try {
+            await emailjs.sendForm(
+                import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
+                formRef.current,
+                import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+            );
+
+            setStatus({
+                type: 'success',
+                message: 'Message sent successfully! I\'ll get back to you soon.',
+            });
+            setFormData({ user_name: '', user_email: '', subject: '', message: '' });
+        } catch (error) {
+            setStatus({
+                type: 'error',
+                message: 'Failed to send message. Please try again.',
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return (
-        <section id="contact" className="py-32 px-6 relative overflow-hidden">
+        <section id="contact" className="py-24 px-6 relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#0a0a0a] to-[#050505] pointer-events-none" />
 
             {/* Subtle glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[150px] pointer-events-none" />
 
-            <div className="max-w-4xl mx-auto relative z-10">
-                {/* Content */}
+            <div className="max-w-6xl mx-auto relative z-10">
+                {/* Header */}
                 <motion.div
-                    className="text-center"
-                    initial={{ opacity: 0, y: 40 }}
+                    className="text-center mb-16"
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    {/* Main Heading */}
-                    <motion.h2
-                        className="text-4xl md:text-6xl lg:text-7xl font-light text-white/90 mb-6"
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                    >
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-light text-white/90 mb-4">
                         Let's Create
                         <span className="block mt-2 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
                             Something Amazing
                         </span>
-                    </motion.h2>
+                    </h2>
+                    <p className="text-lg text-white/50 max-w-2xl mx-auto">
+                        Have a project in mind? Let's discuss how we can work together.
+                    </p>
+                </motion.div>
 
-                    <motion.p
-                        className="text-lg md:text-xl text-white/50 mb-12 max-w-2xl mx-auto"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+                    {/* Contact Form */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-                    </motion.p>
+                        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                            {/* Name Field */}
+                            <div>
+                                <label htmlFor="user_name" className="block text-sm text-white/60 mb-2">
+                                    Your Name
+                                </label>
+                                <input
+                                    type="text"
+                                    id="user_name"
+                                    name="user_name"
+                                    value={formData.user_name}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] transition-all duration-300"
+                                    placeholder="John Doe"
+                                />
+                            </div>
 
-                    {/* CTA Buttons */}
+                            {/* Email Field */}
+                            <div>
+                                <label htmlFor="user_email" className="block text-sm text-white/60 mb-2">
+                                    Your Email
+                                </label>
+                                <input
+                                    type="email"
+                                    id="user_email"
+                                    name="user_email"
+                                    value={formData.user_email}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] transition-all duration-300"
+                                    placeholder="john@example.com"
+                                />
+                            </div>
+
+                            {/* Subject Field */}
+                            <div>
+                                <label htmlFor="subject" className="block text-sm text-white/60 mb-2">
+                                    Subject
+                                </label>
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleChange}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] transition-all duration-300"
+                                    placeholder="Project Inquiry"
+                                />
+                            </div>
+
+                            {/* Message Field */}
+                            <div>
+                                <label htmlFor="message" className="block text-sm text-white/60 mb-2">
+                                    Message
+                                </label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
+                                    rows={5}
+                                    className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] transition-all duration-300 resize-none"
+                                    placeholder="Tell me about your project..."
+                                />
+                            </div>
+
+                            {/* Status Message */}
+                            {status.message && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className={`p-4 rounded-xl text-sm ${status.type === 'success'
+                                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                            : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                                        }`}
+                                >
+                                    {status.message}
+                                </motion.div>
+                            )}
+
+                            {/* Submit Button */}
+                            <motion.button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+                                whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                            >
+                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            </svg>
+                                            Sending...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            </svg>
+                                            Send Message
+                                        </>
+                                    )}
+                                </span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </motion.button>
+                        </form>
+                    </motion.div>
+
+                    {/* Contact Info */}
                     <motion.div
-                        className="flex flex-wrap justify-center gap-4 mb-16"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        className="flex flex-col justify-center"
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                     >
-                        <a
-                            href={`mailto:${Bio.email}`}
-                            className="group relative px-8 py-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_40px_rgba(99,102,241,0.4)]"
-                        >
-                            <span className="relative z-10 flex items-center gap-2">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                                Say Hello
-                            </span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </a>
+                        <div className="space-y-8">
+                            {/* Quick Contact */}
+                            <div>
+                                <h3 className="text-xl font-medium text-white/90 mb-4">Quick Contact</h3>
+                                <div className="space-y-4">
+                                    <a
+                                        href={`mailto:${Bio.email}`}
+                                        className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 group"
+                                    >
+                                        <div className="p-3 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-white/40">Email</p>
+                                            <p className="text-white/80">{Bio.email}</p>
+                                        </div>
+                                    </a>
 
-                        <a
-                            href={Bio.resume}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-8 py-4 rounded-full border border-white/20 text-white/80 font-medium hover:bg-white/[0.05] hover:border-white/40 transition-all duration-300"
-                        >
-                            View Resume
-                        </a>
+                                    <a
+                                        href={Bio.resume}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 group"
+                                    >
+                                        <div className="p-3 rounded-lg bg-purple-500/10 text-purple-400 group-hover:bg-purple-500/20 transition-colors">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-white/40">Resume</p>
+                                            <p className="text-white/80">View my resume →</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Social Links */}
+                            <div>
+                                <h3 className="text-xl font-medium text-white/90 mb-4">Connect With Me</h3>
+                                <div className="flex gap-4">
+                                    {socialLinks.map((social, index) => (
+                                        <motion.a
+                                            key={social.name}
+                                            href={social.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-white/50 hover:text-white hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
+                                            whileHover={{ scale: 1.1, y: -3 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                                        >
+                                            {social.icon}
+                                        </motion.a>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Location */}
+                            <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20">
+                                <p className="text-sm text-white/60">Based in</p>
+                                <p className="text-lg text-white/90">Rishikesh, India 🇮🇳</p>
+                            </div>
+                        </div>
                     </motion.div>
-
-                    {/* Social Links */}
-                    <motion.div
-                        className="flex justify-center gap-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                    >
-                        {socialLinks.map((social, index) => (
-                            <motion.a
-                                key={social.name}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-4 rounded-full bg-white/[0.03] border border-white/10 text-white/50 hover:text-white hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300"
-                                whileHover={{ scale: 1.1, y: -3 }}
-                                whileTap={{ scale: 0.95 }}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                            >
-                                {social.icon}
-                            </motion.a>
-                        ))}
-                    </motion.div>
-
-                    {/* Email Display */}
-                    <motion.p
-                        className="mt-12 text-sm text-white/30"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                    >
-                        {Bio.email}
-                    </motion.p>
-                </motion.div>
+                </div>
             </div>
         </section>
     );
