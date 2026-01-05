@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const TOTAL_FRAMES = 80;
-const SCROLL_HEIGHT = '300vh'; // Faster scroll with 80 frames
-const FRAME_START_INDEX = 0;
+const SCROLL_HEIGHT = '300vh';
+const FRAME_START_INDEX = 1; // Your frames start at 001, not 000
 
 // Text overlay configuration
 const TEXT_OVERLAYS = [
@@ -60,8 +60,8 @@ const TEXT_OVERLAYS = [
     },
     {
         id: 'cta',
-        start: 0.82,
-        end: 0.95,
+        start: 0.85,
+        end: 1,
         content: (
             <div className="text-center">
                 <p className="text-3xl md:text-5xl lg:text-6xl font-light text-white/90 mb-12">
@@ -96,8 +96,8 @@ const preloadImages = (totalFrames) => {
 
         for (let i = 0; i < totalFrames; i++) {
             const img = new Image();
-            const frameNumber = String(i + FRAME_START_INDEX).padStart(3, '0');
-            img.src = `/frames/Slow_Motion_Video_Transition_${frameNumber}.jpg`;
+            const frameNumber = String(i).padStart(3, '0');
+            img.src = `/frames/frame_${frameNumber}.webp`;
 
             img.onload = () => {
                 loadedCount++;
@@ -187,15 +187,15 @@ export default function DeveloperScroll() {
         offset: ['start start', 'end end'],
     });
 
-    // Smooth spring for frame animation - snappier settings
+    // Smooth spring for frame animation
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 300,
-        damping: 40,
+        stiffness: 100,
+        damping: 30,
         restDelta: 0.001,
     });
 
-    // Use direct scroll progress for more responsive frame animation
-    const frameIndex = useTransform(scrollYProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
+    // Transform progress to frame index
+    const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
 
     // Preload images on mount
     useEffect(() => {
@@ -206,8 +206,8 @@ export default function DeveloperScroll() {
 
             for (let i = 0; i < TOTAL_FRAMES; i++) {
                 const img = new Image();
-                const frameNumber = String(i + FRAME_START_INDEX).padStart(3, '0');
-                img.src = `/frames/Slow_Motion_Video_Transition_${frameNumber}.jpg`;
+                const frameNumber = String(i).padStart(3, '0');
+                img.src = `/frames/frame_${frameNumber}.webp`;
 
                 await new Promise((resolve) => {
                     img.onload = resolve;
@@ -237,10 +237,9 @@ export default function DeveloperScroll() {
     // Draw frame to canvas
     const drawFrame = useCallback((index) => {
         const canvas = canvasRef.current;
-        if (!canvas || images.length === 0) return;
+        const ctx = canvas?.getContext('2d');
 
-        const ctx = canvas.getContext('2d', { alpha: false });
-        if (!ctx) return;
+        if (!ctx || images.length === 0) return;
 
         const frameIdx = Math.min(Math.max(Math.round(index), 0), images.length - 1);
         const img = images[frameIdx];
@@ -251,27 +250,17 @@ export default function DeveloperScroll() {
         if (currentFrameRef.current === frameIdx) return;
         currentFrameRef.current = frameIdx;
 
-        // Get container dimensions
+        // Set canvas size to match container
         const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
 
-        // Only resize canvas if dimensions changed
-        const targetWidth = Math.floor(rect.width * dpr);
-        const targetHeight = Math.floor(rect.height * dpr);
-
-        if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
+        if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
         }
 
-        // Reset transform and set scale fresh each time (prevents accumulation)
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        // Disable image smoothing for sharper rendering
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-
-        // Clear canvas
+        // Clear and draw
         ctx.clearRect(0, 0, rect.width, rect.height);
 
         // Calculate cover sizing
@@ -295,15 +284,10 @@ export default function DeveloperScroll() {
         ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
     }, [images]);
 
-    // Subscribe to frame index changes with RAF for smooth rendering
+    // Subscribe to frame index changes
     useEffect(() => {
-        let rafId = null;
-
         const unsubscribe = frameIndex.on('change', (latest) => {
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-                drawFrame(latest);
-            });
+            drawFrame(latest);
         });
 
         // Initial draw
@@ -311,10 +295,7 @@ export default function DeveloperScroll() {
             drawFrame(0);
         }
 
-        return () => {
-            unsubscribe();
-            if (rafId) cancelAnimationFrame(rafId);
-        };
+        return () => unsubscribe();
     }, [frameIndex, drawFrame, images]);
 
     // Handle resize
@@ -379,11 +360,11 @@ export default function DeveloperScroll() {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
                     >
-                        <span className="text-xs text-white/50 tracking-[0.2em] uppercase">
+                        <span className="text-xs text-white/40 tracking-[0.2em] uppercase">
                             Scroll
                         </span>
                         <motion.div
-                            className="w-px h-12 bg-linear-to-b from-white/90 to-transparent"
+                            className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent"
                             animate={{ scaleY: [1, 0.6, 1] }}
                             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                         />
