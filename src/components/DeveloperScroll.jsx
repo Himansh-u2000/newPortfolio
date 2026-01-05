@@ -2,8 +2,8 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const TOTAL_FRAMES = 80;
-const SCROLL_HEIGHT = '300vh'; // Increased for 80 frames
-const FRAME_START_INDEX = 0; // Frames start at 000 // Your frames start at 001, not 000
+const SCROLL_HEIGHT = '250vh'; // Faster scroll with 80 frames
+const FRAME_START_INDEX = 0;
 
 // Text overlay configuration
 const TEXT_OVERLAYS = [
@@ -60,8 +60,8 @@ const TEXT_OVERLAYS = [
     },
     {
         id: 'cta',
-        start: 0.85,
-        end: 1,
+        start: 0.82,
+        end: 0.95,
         content: (
             <div className="text-center">
                 <p className="text-3xl md:text-5xl lg:text-6xl font-light text-white/90 mb-12">
@@ -194,8 +194,8 @@ export default function DeveloperScroll() {
         restDelta: 0.001,
     });
 
-    // Transform progress to frame index
-    const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
+    // Use direct scroll progress for more responsive frame animation
+    const frameIndex = useTransform(scrollYProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
 
     // Preload images on mount
     useEffect(() => {
