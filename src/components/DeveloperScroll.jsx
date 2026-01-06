@@ -1,266 +1,102 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { useEffect, useRef, useState, useCallback } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ================= CONFIG ================= */
 
 const TOTAL_FRAMES = 80;
-const SCROLL_HEIGHT = '300vh';
-const FRAME_START_INDEX = 1; // Your frames start at 001, not 000
+const SCROLL_HEIGHT = "400vh"; // More scroll distance for smoother animation
 
-// Text overlay configuration
-const TEXT_OVERLAYS = [
-    {
-        id: 'hero',
-        start: 0,
-        end: 0.15,
-        content: (
-            <div className="text-center">
-                <motion.h1
-                    className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight gradient-text mb-4"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    Himanshu Haldar
-                </motion.h1>
-                <motion.p
-                    className="text-lg md:text-xl text-white/60 tracking-[0.3em] uppercase"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    MERN Stack Developer
-                </motion.p>
-            </div>
-        ),
-    },
-    {
-        id: 'phase1',
-        start: 0.25,
-        end: 0.40,
-        content: (
-            <div className="text-center max-w-3xl mx-auto">
-                <p className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed text-white/90">
-                    Building modern web experiences
-                    <span className="block mt-2 text-white/60">with React & motion</span>
-                </p>
-            </div>
-        ),
-    },
-    {
-        id: 'phase2',
-        start: 0.55,
-        end: 0.70,
-        content: (
-            <div className="text-center max-w-4xl mx-auto">
-                <p className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed text-white/90">
-                    Scalable backends.
-                    <span className="block mt-2 text-white/60">Clean architecture. Performance first.</span>
-                </p>
-            </div>
-        ),
-    },
-    {
-        id: 'cta',
-        start: 0.85,
-        end: 1,
-        content: (
-            <div className="text-center">
-                <p className="text-3xl md:text-5xl lg:text-6xl font-light text-white/90 mb-12">
-                    Let's build something impactful.
-                </p>
-                <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-                    <a href="#projects" className="cta-button-primary cta-button">
-                        Projects
-                    </a>
-                    <a
-                        href="https://github.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cta-button"
-                    >
-                        GitHub
-                    </a>
-                    <a href="#contact" className="cta-button">
-                        Contact
-                    </a>
-                </div>
-            </div>
-        ),
-    },
+const frameSrc = (i) =>
+    `/frames/Slow_Motion_Video_Transition_${String(i).padStart(3, "0")}.jpg`;
+
+/* ================= TEXT OVERLAYS ================= */
+
+const overlays = [
+    { start: 0, end: 0.15, id: "hero" },
+    { start: 0.28, end: 0.42, id: "phase1" },
+    { start: 0.55, end: 0.7, id: "phase2" },
+    { start: 0.82, end: 1, id: "cta" },
 ];
 
-// Preload images utility
-const preloadImages = (totalFrames) => {
-    return new Promise((resolve) => {
-        const images = [];
-        let loadedCount = 0;
+/* ================= COMPONENT ================= */
 
-        for (let i = 0; i < totalFrames; i++) {
-            const img = new Image();
-            const frameNumber = String(i).padStart(3, '0');
-            img.src = `/frames/frame_${frameNumber}.webp`;
-
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === totalFrames) {
-                    resolve(images);
-                }
-            };
-
-            img.onerror = () => {
-                loadedCount++;
-                if (loadedCount === totalFrames) {
-                    resolve(images);
-                }
-            };
-
-            images.push(img);
-        }
-
-        // Fallback timeout
-        setTimeout(() => resolve(images), 5000);
-    });
-};
-
-// Loading component
-const Loader = ({ progress }) => (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505]">
-        <div className="relative">
-            <div className="w-16 h-16 border border-white/20 rounded-full loader-pulse" />
-            <div
-                className="absolute inset-0 border border-white/80 rounded-full"
-                style={{
-                    clipPath: `polygon(0 0, 100% 0, 100% ${progress}%, 0 ${progress}%)`,
-                }}
-            />
-        </div>
-        <p className="mt-6 text-sm text-white/40 tracking-[0.2em] uppercase">
-            Loading Experience
-        </p>
-        <p className="mt-2 text-xs text-white/20 font-mono">
-            {Math.round(progress)}%
-        </p>
-    </div>
-);
-
-// Text overlay component
-const TextOverlay = ({ overlay, progress }) => {
-    const { start, end, content } = overlay;
-
-    // Calculate opacity based on scroll progress
-    const fadeRange = 0.05;
-    let opacity = 0;
-
-    if (progress >= start && progress <= end) {
-        if (progress < start + fadeRange) {
-            opacity = (progress - start) / fadeRange;
-        } else if (progress > end - fadeRange) {
-            opacity = (end - progress) / fadeRange;
-        } else {
-            opacity = 1;
-        }
-    }
-
-    if (opacity <= 0) return null;
-
-    return (
-        <motion.div
-            className="absolute inset-0 flex items-center justify-center px-6 z-20 pointer-events-none"
-            style={{ opacity }}
-        >
-            <div className="pointer-events-auto">
-                {content}
-            </div>
-        </motion.div>
-    );
-};
-
-export default function DeveloperScroll() {
+export default function DeveloperScrollGSAP() {
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
-    const [images, setImages] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [loadProgress, setLoadProgress] = useState(0);
+    const imagesRef = useRef([]);
     const currentFrameRef = useRef(0);
 
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ['start start', 'end end'],
-    });
+    const [loaded, setLoaded] = useState(false);
+    const [loadProgress, setLoadProgress] = useState(0);
 
-    // Smooth spring for frame animation
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001,
-    });
+    /* ===== PRELOAD IMAGES ===== */
 
-    // Transform progress to frame index
-    const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
-
-    // Preload images on mount
     useEffect(() => {
-        let isMounted = true;
+        let mounted = true;
 
-        const loadImages = async () => {
-            const loadedImages = [];
+        const load = async () => {
+            const imgs = [];
 
             for (let i = 0; i < TOTAL_FRAMES; i++) {
                 const img = new Image();
-                const frameNumber = String(i).padStart(3, '0');
-                img.src = `/frames/frame_${frameNumber}.webp`;
+                img.src = frameSrc(i);
 
-                await new Promise((resolve) => {
-                    img.onload = resolve;
-                    img.onerror = resolve;
+                await new Promise((res) => {
+                    img.onload = res;
+                    img.onerror = res;
                 });
 
-                loadedImages.push(img);
+                imgs.push(img);
 
-                if (isMounted) {
-                    setLoadProgress(((i + 1) / TOTAL_FRAMES) * 100);
+                if (mounted) {
+                    setLoadProgress(Math.round(((i + 1) / TOTAL_FRAMES) * 100));
                 }
             }
 
-            if (isMounted) {
-                setImages(loadedImages);
-                setIsLoading(false);
+            if (mounted) {
+                imagesRef.current = imgs;
+                setLoaded(true);
             }
         };
 
-        loadImages();
-
-        return () => {
-            isMounted = false;
-        };
+        load();
+        return () => { mounted = false; };
     }, []);
 
-    // Draw frame to canvas
+    /* ===== DRAW FRAME ===== */
+
     const drawFrame = useCallback((index) => {
         const canvas = canvasRef.current;
-        const ctx = canvas?.getContext('2d');
+        if (!canvas) return;
 
-        if (!ctx || images.length === 0) return;
-
-        const frameIdx = Math.min(Math.max(Math.round(index), 0), images.length - 1);
-        const img = images[frameIdx];
-
+        const ctx = canvas.getContext("2d", { alpha: false });
+        const img = imagesRef.current[index];
         if (!img || !img.complete || img.naturalWidth === 0) return;
 
         // Prevent unnecessary redraws
-        if (currentFrameRef.current === frameIdx) return;
-        currentFrameRef.current = frameIdx;
+        if (currentFrameRef.current === index) return;
+        currentFrameRef.current = index;
 
-        // Set canvas size to match container
         const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
 
-        if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
+        // Resize canvas if needed
+        const targetWidth = Math.floor(rect.width * dpr);
+        const targetHeight = Math.floor(rect.height * dpr);
+
+        if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
         }
 
-        // Clear and draw
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+
+        // Clear canvas
         ctx.clearRect(0, 0, rect.width, rect.height);
 
         // Calculate cover sizing
@@ -282,95 +118,188 @@ export default function DeveloperScroll() {
         }
 
         ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-    }, [images]);
+    }, []);
 
-    // Subscribe to frame index changes
+    /* ===== SCROLLTRIGGER ===== */
+
     useEffect(() => {
-        const unsubscribe = frameIndex.on('change', (latest) => {
-            drawFrame(latest);
-        });
+        if (!loaded) return;
 
         // Initial draw
-        if (images.length > 0) {
-            drawFrame(0);
-        }
+        drawFrame(0);
 
-        return () => unsubscribe();
-    }, [frameIndex, drawFrame, images]);
+        const ctx = gsap.context(() => {
+            ScrollTrigger.create({
+                trigger: containerRef.current,
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 0.5, // Smooth scrubbing
+                pin: canvasRef.current.parentElement,
+                onUpdate: (self) => {
+                    const frame = Math.min(
+                        Math.max(Math.round(self.progress * (TOTAL_FRAMES - 1)), 0),
+                        TOTAL_FRAMES - 1
+                    );
+                    drawFrame(frame);
 
-    // Handle resize
+                    // Update text overlays with smooth fade
+                    overlays.forEach(({ start, end, id }) => {
+                        const el = document.getElementById(id);
+                        if (!el) return;
+
+                        const fadeRange = 0.05;
+                        let opacity = 0;
+
+                        if (self.progress >= start && self.progress <= end) {
+                            if (self.progress < start + fadeRange) {
+                                opacity = (self.progress - start) / fadeRange;
+                            } else if (self.progress > end - fadeRange) {
+                                opacity = (end - self.progress) / fadeRange;
+                            } else {
+                                opacity = 1;
+                            }
+                        }
+
+                        el.style.opacity = opacity;
+                    });
+                },
+            });
+        });
+
+        return () => ctx.revert();
+    }, [loaded, drawFrame]);
+
+    /* ===== HANDLE RESIZE ===== */
+
     useEffect(() => {
+        if (!loaded) return;
+
         const handleResize = () => {
-            if (images.length > 0) {
-                currentFrameRef.current = -1; // Force redraw
-                drawFrame(frameIndex.get());
-            }
+            currentFrameRef.current = -1; // Force redraw
+            drawFrame(0);
         };
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [drawFrame, frameIndex, images]);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, [loaded, drawFrame]);
 
-    // Track scroll progress for text overlays
-    const [progress, setProgress] = useState(0);
+    /* ===== LOADING STATE ===== */
 
-    useEffect(() => {
-        const unsubscribe = scrollYProgress.on('change', (latest) => {
-            setProgress(latest);
-        });
-        return () => unsubscribe();
-    }, [scrollYProgress]);
-
-    if (isLoading) {
-        return <Loader progress={loadProgress} />;
+    if (!loaded) {
+        return (
+            <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#050505]">
+                <div className="relative w-16 h-16">
+                    <div className="absolute inset-0 border border-white/20 rounded-full" />
+                    <div
+                        className="absolute inset-0 border border-white/80 rounded-full transition-all duration-300"
+                        style={{
+                            clipPath: `polygon(0 0, 100% 0, 100% ${loadProgress}%, 0 ${loadProgress}%)`,
+                        }}
+                    />
+                </div>
+                <p className="mt-6 text-sm text-white/40 tracking-[0.2em] uppercase">
+                    Loading Experience
+                </p>
+                <p className="mt-2 text-xs text-white/20 font-mono">{loadProgress}%</p>
+            </div>
+        );
     }
 
     return (
-        <div
+        <section
             ref={containerRef}
-            className="relative"
             style={{ height: SCROLL_HEIGHT }}
+            className="relative bg-[#050505]"
         >
-            {/* Sticky canvas container */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#050505]">
-                {/* Canvas for frame animation */}
+            <div className="h-screen relative overflow-hidden">
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full"
-                    style={{ backgroundColor: '#050505' }}
+                    style={{ backgroundColor: "#050505" }}
                 />
 
                 {/* Gradient overlay for text readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505]/40 pointer-events-none" />
 
-                {/* Text overlays */}
-                {TEXT_OVERLAYS.map((overlay) => (
-                    <TextOverlay
-                        key={overlay.id}
-                        overlay={overlay}
-                        progress={progress}
-                    />
-                ))}
+                {/* ===== TEXT OVERLAYS ===== */}
+
+                <Overlay id="hero">
+                    <div className="text-center">
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight gradient-text mb-4">
+                            Himanshu Haldar
+                        </h1>
+                        <p className="text-lg md:text-xl text-white/60 tracking-[0.3em] uppercase">
+                            MERN Stack Developer
+                        </p>
+                    </div>
+                </Overlay>
+
+                <Overlay id="phase1">
+                    <div className="text-center max-w-3xl mx-auto px-6">
+                        <p className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed text-white/90">
+                            Building modern web experiences
+                            <span className="block mt-2 text-white/60">with React & GSAP</span>
+                        </p>
+                    </div>
+                </Overlay>
+
+                <Overlay id="phase2">
+                    <div className="text-center max-w-4xl mx-auto px-6">
+                        <p className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed text-white/90">
+                            Scalable backends.
+                            <span className="block mt-2 text-white/60">Clean architecture. Performance first.</span>
+                        </p>
+                    </div>
+                </Overlay>
+
+                <Overlay id="cta">
+                    <div className="text-center">
+                        <p className="text-3xl md:text-5xl lg:text-6xl font-light text-white/90 mb-12">
+                            Let's build something impactful.
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+                            <a href="#projects" className="cta-button-primary cta-button">
+                                Projects
+                            </a>
+                            <a
+                                href="https://github.com/Himansh-u2000/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="cta-button"
+                            >
+                                GitHub
+                            </a>
+                            <a href="#contact" className="cta-button">
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </Overlay>
 
                 {/* Scroll indicator */}
-                {progress < 0.1 && (
-                    <motion.div
-                        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1 }}
-                    >
-                        <span className="text-xs text-white/40 tracking-[0.2em] uppercase">
-                            Scroll
-                        </span>
-                        <motion.div
-                            className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent"
-                            animate={{ scaleY: [1, 0.6, 1] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                        />
-                    </motion.div>
-                )}
+                <div
+                    id="scroll-indicator"
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                >
+                    <span className="text-xs text-white/40 tracking-[0.2em] uppercase">
+                        Scroll
+                    </span>
+                    <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent animate-pulse" />
+                </div>
             </div>
+        </section>
+    );
+}
+
+/* ================= OVERLAY ================= */
+
+function Overlay({ id, children }) {
+    return (
+        <div
+            id={id}
+            className="absolute inset-0 flex items-center justify-center px-6 z-20 pointer-events-none opacity-0 transition-opacity duration-300"
+        >
+            <div className="pointer-events-auto">{children}</div>
         </div>
     );
 }
