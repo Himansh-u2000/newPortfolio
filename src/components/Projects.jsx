@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects, projectCategories } from '../constants/constants';
 
+const FALLBACK_IMAGE = "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/ChatGPT%20Image%20Jan%207,%202026,%2005_49_17%20PM.png";
+
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -74,8 +76,8 @@ export default function Projects() {
                             key={category}
                             onClick={() => setActiveFilter(category)}
                             className={`px-4 py-2 text-sm rounded-full border transition-all duration-300 capitalize ${activeFilter === category
-                                    ? 'bg-indigo-500 border-indigo-500 text-white'
-                                    : 'bg-transparent border-white/20 text-white/60 hover:border-white/40 hover:text-white/80'
+                                ? 'bg-indigo-500 border-indigo-500 text-white'
+                                : 'bg-transparent border-white/20 text-white/60 hover:border-white/40 hover:text-white/80'
                                 }`}
                         >
                             {category}
@@ -106,7 +108,7 @@ export default function Projects() {
                                     {/* Image */}
                                     <div className="relative h-48 overflow-hidden">
                                         <img
-                                            src={project.image}
+                                            src={project.image || FALLBACK_IMAGE}
                                             alt={project.title}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                             loading="lazy"

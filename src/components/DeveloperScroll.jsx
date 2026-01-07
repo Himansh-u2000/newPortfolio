@@ -16,9 +16,9 @@ const frameSrc = (i) =>
 
 const overlays = [
     { start: 0, end: 0.15, id: "hero" },
-    { start: 0.28, end: 0.42, id: "phase1" },
-    { start: 0.55, end: 0.7, id: "phase2" },
-    { start: 0.82, end: 1, id: "cta" },
+    { start: 0.20, end: 0.42, id: "phase1" },
+    { start: 0.48, end: 0.70, id: "phase2" },
+    { start: 0.78, end: 1, id: "cta" },
 ];
 
 /* ================= COMPONENT ================= */
@@ -237,8 +237,8 @@ export default function DeveloperScrollGSAP() {
                 <Overlay id="phase1">
                     <div className="text-center max-w-3xl mx-auto px-6">
                         <p className="text-2xl md:text-4xl lg:text-5xl font-light leading-relaxed text-white/90">
-                            Building modern web experiences
-                            <span className="block mt-2 text-white/60">with React & GSAP</span>
+                            Building Modern Web Experiences
+                            <span className="block mt-2 text-white/60">with React & Tailwind CSS</span>
                         </p>
                     </div>
                 </Overlay>
@@ -286,6 +286,17 @@ export default function DeveloperScrollGSAP() {
                     </span>
                     <div className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent animate-pulse" />
                 </div>
+
+                {/* Fixed Contact Button */}
+                <a
+                    href="#contact"
+                    className="fixed bottom-8 right-8 z-50 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium text-sm tracking-wide shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Contact
+                </a>
             </div>
         </section>
     );

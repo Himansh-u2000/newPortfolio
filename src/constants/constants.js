@@ -361,7 +361,7 @@ export const projects = [
         date: "Jul 2024",
         description:
             "Mobile app built in Flutter to receive real-time alerts when nearby accidents are detected by a hardware device. Uses WebSocket and Google Maps API.",
-        image: "https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png",
+        // image: "https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png",
         tags: ["Flutter", "WebSocket", "Google Maps API", "Material UI"],
         category: "mobile app",
         github: "https://github.com/Himansh-u2000",
@@ -372,7 +372,7 @@ export const projects = [
         date: "Nov 2023",
         description:
             "Android notes application with Room Database for persistent storage, note editing, and deletion. Built using MVVM architecture.",
-        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/todo-app-thumbnail.png?updatedAt=1748631398480",
+        // image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/todo-app-thumbnail.png?updatedAt=1748631398480",
         tags: ["Kotlin", "Room Database", "MVVM", "Android Studio"],
         category: "android app",
         github: "https://github.com/Himansh-u2000/SimpleNotesWithRoom",
@@ -383,7 +383,7 @@ export const projects = [
         date: "May 2025",
         description:
             "Python-based utility to convert photos into pencil sketches using OpenCV and image processing filters.",
-        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/pencil-sketch-thumbnail.png?updatedAt=1748631111851",
+        // image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/pencil-sketch-thumbnail.png?updatedAt=1748631111851",
         tags: ["Python", "OpenCV", "Image Processing"],
         category: "utility tool",
         github: "https://github.com/Himansh-u2000/pencilSketcchApp",
