@@ -1,0 +1,20 @@
+# Robots.txt for Himanshu Haldar Portfolio
+# https://www.himanshuhaldar.online/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.himanshuhaldar.me/sitemap.xml
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+
+# Disallow common non-essential paths
+Disallow: /node_modules/
+Disallow: /.git/
