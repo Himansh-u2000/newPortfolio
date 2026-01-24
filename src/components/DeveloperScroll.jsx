@@ -8,9 +8,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const TOTAL_FRAMES = 80;
 const SCROLL_HEIGHT = "400vh"; // More scroll distance for smoother animation
+const CHUNK_SIZE = 10; // Load images in chunks for progressive loading
 
-const frameSrc = (i) =>
-    `/frames/Slow_Motion_Video_Transition_${String(i).padStart(3, "0")}.jpg`;
+// ImageKit CDN URL with auto-format (WebP/AVIF) and quality optimization
+const IMAGEKIT_BASE = "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/frames";
+
+const frameSrc = (i, quality = 80) =>
+    `${IMAGEKIT_BASE}/Slow_Motion_Video_Transition_${String(i).padStart(3, "0")}.jpg?tr=q-${quality},f-auto`;
 
 /* ================= TEXT OVERLAYS ================= */
 
@@ -37,24 +41,59 @@ export default function DeveloperScrollGSAP() {
     useEffect(() => {
         let mounted = true;
 
-        const load = async () => {
-            const imgs = [];
-
-            for (let i = 0; i < TOTAL_FRAMES; i++) {
+        // Load a single image and return a promise
+        const loadImage = (index) => {
+            return new Promise((resolve) => {
                 const img = new Image();
-                img.src = frameSrc(i);
+                img.crossOrigin = "anonymous"; // Enable CORS for ImageKit
+                img.onload = () => resolve({ index, img, success: true });
+                img.onerror = () => resolve({ index, img, success: false });
+                img.src = frameSrc(index);
+            });
+        };
 
-                await new Promise((res) => {
-                    img.onload = res;
-                    img.onerror = res;
-                });
-
-                imgs.push(img);
-
-                if (mounted) {
-                    setLoadProgress(Math.round(((i + 1) / TOTAL_FRAMES) * 100));
-                }
+        // Load images in chunks for progressive loading
+        const loadChunk = async (startIndex, endIndex) => {
+            const promises = [];
+            for (let i = startIndex; i < endIndex && i < TOTAL_FRAMES; i++) {
+                promises.push(loadImage(i));
             }
+            return Promise.all(promises);
+        };
+
+        const load = async () => {
+            const imgs = new Array(TOTAL_FRAMES).fill(null);
+            let loadedCount = 0;
+
+            // Calculate total chunks
+            const totalChunks = Math.ceil(TOTAL_FRAMES / CHUNK_SIZE);
+
+            // Load all chunks in parallel for maximum speed
+            const chunkPromises = [];
+            for (let chunk = 0; chunk < totalChunks; chunk++) {
+                const startIndex = chunk * CHUNK_SIZE;
+                const endIndex = Math.min(startIndex + CHUNK_SIZE, TOTAL_FRAMES);
+
+                chunkPromises.push(
+                    loadChunk(startIndex, endIndex).then((results) => {
+                        results.forEach(({ index, img }) => {
+                            imgs[index] = img;
+                            loadedCount++;
+                            if (mounted) {
+                                setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
+                            }
+                        });
+
+                        // Update imagesRef progressively so early frames can be used
+                        if (mounted) {
+                            imagesRef.current = [...imgs];
+                        }
+                    })
+                );
+            }
+
+            // Wait for all chunks to complete
+            await Promise.all(chunkPromises);
 
             if (mounted) {
                 imagesRef.current = imgs;
