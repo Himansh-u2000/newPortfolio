@@ -4,20 +4,20 @@ export const Bio = {
     name: "Himanshu Haldar",
     roles: [
         "Full Stack Developer",
-        "Android Developer",
-        "UI/UX Designer",
+        "DevOps Engineer",
+        "Open Source Contributor",
         "Programmer",
     ],
     description:
-        "I'm a curious and adaptable developer with experience in React, Flutter, and Node.js. I love building real-world solutions and bring a growth mindset to every project. Always learning, always improving.",
+        "Full-Stack Web Developer with hands-on experience in JavaScript, React.js, Node.js, Express.js, MongoDB, and Redis, specializing in building scalable web applications, RESTful APIs, and real-time systems. Proficient in cloud deployment (AWS, Linux VPS, Docker, Nginx) and workflow automation (n8n). Published NPM package author and Google Developer Groups On Campus Lead.",
     github: "https://github.com/Himansh-u2000/",
     resume:
-        "https://drive.google.com/file/d/1TrO0Z7jRWP-4GVtCrNqFfZtcFrvZcvhn/view?usp=drivesdk",
+        "https://drive.google.com/file/d/1h0CLSc1RG6e_7ukH7vyX5Zl8AS71eufw/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/himanshu-haldar-5b3830250",
     twitter: "https://x.com/HimanshuHaldar3",
     email: "himansh.0197@gmail.com",
-    phone: "+91 639543 297",
-    website: "https://www.himanshuhaldar.me/",
+    phone: "+91 63954 31297",
+    website: "https://www.himanshuhaldar.online/",
 };
 
 export const skills = [
@@ -60,7 +60,12 @@ export const skills = [
             {
                 name: "Express Js",
                 image:
-                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAY1BMVEWCgoL////l5eXk5OTm5ubu7u74+Pj19fXx8fH7+/vr6+t+fn52dnZ7e3t8fHzz8/OGhoaTk5Pa2tq3t7e7u7utra3Q0NCZmZnFxcWkpKSMjIzKysqpqanX19e/v7+dnZ1ra2tH/Sn9AAASPElEQVR4nOVdbZuyKhBWwTcErcxqa7fO//+VB9RKGF6tdvWc+bLPNY+m48markup.png",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg",
+            },
+            {
+                name: "Fastify",
+                image:
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/fastify/fastify-original.svg",
             },
             {
                 name: "Python",
@@ -68,14 +73,14 @@ export const skills = [
                     "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
             },
             {
-                name: "Flask",
-                image:
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Flask_logo.svg/1280px-Flask_logo.svg.png",
-            },
-            {
                 name: "MongoDB",
                 image:
                     "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg",
+            },
+            {
+                name: "Redis",
+                image:
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original.svg",
             },
             {
                 name: "Firebase",
@@ -84,32 +89,37 @@ export const skills = [
         ],
     },
     {
-        title: "Android",
+        title: "DevOps & Cloud",
         skills: [
             {
-                name: "Java",
+                name: "Docker",
                 image:
-                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg",
             },
             {
-                name: "Kotlin",
+                name: "Nginx",
                 image:
-                    "https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg",
             },
             {
-                name: "Jetpack Compose",
+                name: "PM2",
                 image:
-                    "https://3.bp.blogspot.com/-VVp3WvJvl84/X0Vu6EjYqDI/AAAAAAAAPjU/ZOMKiUlgfg8ok8DY8Hc-ocOvGdB0z86AgCLcBGAsYHQ/s1600/jetpack%2Bcompose%2Bicon_RGB.png",
+                    "https://raw.githubusercontent.com/Unitech/pm2/master/pres/pm2-v4.png",
             },
             {
-                name: "Flutter",
+                name: "Linux",
                 image:
-                    "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg",
             },
             {
-                name: "Android Studio",
+                name: "AWS",
                 image:
-                    "https://developer.android.com/static/studio/images/new-studio-logo-1_1920.png",
+                    "https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png",
+            },
+            {
+                name: "Google Cloud",
+                image:
+                    "https://static-00.iconduck.com/assets.00/google-cloud-platform-logo-icon-2048x1824-pg4wzspq.png",
             },
         ],
     },
@@ -152,19 +162,14 @@ export const skills = [
                     "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
             },
             {
-                name: "AWS",
+                name: "TypeScript",
                 image:
-                    "https://download.logo.wine/logo/Amazon_Web_Services/Amazon_Web_Services-Logo.wine.png",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
             },
             {
-                name: "Google Cloud",
+                name: "NPM",
                 image:
-                    "https://static-00.iconduck.com/assets.00/google-cloud-platform-logo-icon-2048x1824-pg4wzspq.png",
-            },
-            {
-                name: "Vercel",
-                image:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW-cSr3s_B-fQrAuCXvyNfVZTirOOsgtuXIw&s",
+                    "https://raw.githubusercontent.com/devicons/devicon/master/icons/npm/npm-original-wordmark.svg",
             },
             {
                 name: "VS Code",
@@ -172,9 +177,9 @@ export const skills = [
                     "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519",
             },
             {
-                name: "Figma",
+                name: "REST APIs",
                 image:
-                    "https://s3-alpha.figma.com/hub/file/1481185752/fa4cd070-6a79-4e1b-b079-8b9b76408595-cover.png",
+                    "https://cdn-icons-png.flaticon.com/512/2164/2164832.png",
             },
         ],
     },
@@ -183,11 +188,30 @@ export const skills = [
 export const experiences = [
     {
         id: 0,
+        img: "https://cdn-icons-png.flaticon.com/512/4257/4257276.png",
+        role: "Freelance Full-Stack Web Developer",
+        company: "Self-Employed",
+        date: "Jan 2025 – Present",
+        desc: "Designed and developed a full-stack web application for a tour & travel business (uttarakhandtours.site) using React.js and Node.js/Express.js with MongoDB, featuring end-to-end online booking management and a customer review system. Deployed on a Linux VPS with Nginx, SSL/TLS, and PM2. Integrated N8N workflow automation for blog publishing and SEO.",
+        skills: [
+            "React.js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "Nginx",
+            "PM2",
+            "N8N",
+            "JWT",
+        ],
+        doc: "https://uttarakhandtours.site",
+    },
+    {
+        id: 1,
         img: "https://physiobuddies.in/assets/logo-CZkn2wwb.png",
         role: "Frontend Developer Intern",
-        company: "Physiobuddies.in",
-        date: "Aug 2024 – Oct 2025",
-        desc: "Developed the entire frontend architecture for a dynamic physiotherapy web platform using React.js, Tailwind CSS, and custom hooks. Built a dynamic admin dashboard with real-time data visualization. Collaborated with the backend team to integrate APIs.",
+        company: "PhysioBuddies.in",
+        date: "Jan 2025 – Jan 2026",
+        desc: "Developed the entire frontend architecture for a dynamic physiotherapy web platform using React.js, Tailwind CSS, and custom hooks. Built a dynamic admin dashboard with real-time data visualization. Improved code reusability through modular component structures, reducing code duplication by 25%.",
         skills: [
             "React",
             "Tailwind CSS",
@@ -199,33 +223,17 @@ export const experiences = [
         doc: "https://physiobuddies.in",
     },
     {
-        id: 1,
-        img: "https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png",
-        role: "Flutter Developer Intern",
-        company: "Admission Tracker App",
-        date: "July 2022 – Sept 2022",
-        desc: "Built a Flutter app under senior guidance to help students track their counselling positions for foreign college admissions. Designed key UI screens and integrated Firebase.",
-        skills: [
-            "Flutter",
-            "Dart",
-            "Firebase",
-            "Material Design",
-            "UI/UX",
-        ],
-    },
-    {
         id: 2,
         img: "https://developers.google.com/community/gdg/images/logo-lockup-gdg-horizontal_720.png",
-        role: "GDG Team Head",
-        company: "Google Developer Group",
-        date: "2023 – Present",
-        desc: "Led the technical wing of GDG. Organized college-wide hackathons, workshops, and 20+ events in Dharohar 2025. Mentored juniors in Flutter and Web Development. Achieved All India 2nd Rank in Google Cloud Study Jam 2023.",
+        role: "Google Developer Groups On Campus Lead",
+        company: "Quantum University",
+        date: "2025 – 26",
+        desc: "Leading workshops, hackathons, and Google Cloud Study Jams. Organized FusionByte-QHack24 hackathon. Previously led the university to achieve All India 2nd Rank for the highest number of successful completions in Google Cloud Study Jam 2023.",
         skills: [
             "Leadership",
             "Event Management",
-            "Flutter",
-            "Kotlin",
-            "Compose Camp",
+            "Google Cloud",
+            "Web Development",
             "Hackathon Planning",
         ],
     },
@@ -234,8 +242,8 @@ export const experiences = [
         img: "https://www.codingninjas.com/landing/wp-content/uploads/elementor/thumbs/frame_1437253777-qxyirihczqq9hfa9r16trpddqa3yz0g13x8e6975hk.webp",
         role: "Campus Technical Officer",
         company: "10X Club – Coding Ninjas",
-        date: "2024 – Present",
-        desc: "Represented Coding Ninjas at campus level. Conducted code sessions and promoted coding culture. Helped peers improve problem-solving and DSA skills.",
+        date: "2024 – 25",
+        desc: "Represented Coding Ninjas on campus, organizing coding contests, mentoring peers, and promoting technical learning initiatives.",
         skills: [
             "DSA",
             "Community Leadership",
@@ -291,26 +299,62 @@ export const education = [
 export const projects = [
     {
         id: 0,
+        title: "Tea Social – Full-Stack Community Platform",
+        date: "2025",
+        description:
+            "Engineered a location-aware social platform with geospatial post recommendations using MongoDB 2dsphere indexes and geohash-based Redis caching, reducing API response times by ~60%. Features JWT & Google OAuth 2.0 auth, Redis-backed clap system with batch-sync to MongoDB (~90% less DB writes), infinite scroll, Stripe subscriptions, and Framer Motion animations.",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/1.png",
+        tags: ["React.js", "Node.js", "Express.js", "MongoDB", "Redis", "Stripe", "Google OAuth 2.0"],
+        category: "full-stack",
+        github: "https://github.com/Himansh-u2000/tea-website",
+    },
+    {
+        id: 1,
+        title: "deploykit-cli – Open-Source VPS Deployment CLI",
+        date: "2025",
+        description:
+            "Published npm CLI tool automating full-stack deployment on Linux VPS (Ubuntu/Debian). Automates Nginx reverse proxy, PM2 process management, SSL/TLS via Let's Encrypt, and swap memory. Supports multi-stack detection (React SPA, Express, Next.js, monorepos), Git-based rollback, and zero-downtime redeployment via PM2 clusters.",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/Screenshot%202026-01-06%20033325.png",
+        tags: ["Node.js", "Bash", "Nginx", "PM2", "Certbot", "Let's Encrypt", "Linux"],
+        category: "devops",
+        github: "",
+        webapp: "https://www.npmjs.com/package/deploykit-cli",
+    },
+    {
+        id: 2,
+        title: "Hybrid LLM Gateway – AI Chat Routing System",
+        date: "2025",
+        description:
+            "Production-grade OpenAI-compatible AI Gateway using Fastify that routes chat completions between self-hosted Ollama and cloud-based DigitalOcean AI Agent via token counting and NLP intent detection. Features Redis-backed API key auth, rate limiting, SSE streaming, and Docker Compose orchestration with React 19 frontend playground.",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/agriguide-thumbnail.png?updatedAt=1748631658625",
+        tags: ["Node.js", "Fastify", "React", "Redis", "Docker", "Nginx", "Ollama", "SSE"],
+        category: "full-stack",
+        github: "https://github.com/Himansh-u2000/hybrid-llm-gateway",
+    },
+    {
+        id: 3,
         title: "GS Enterprises – MERN Admin Dashboard",
         date: "September 2025",
         description: "Built a secure full-stack MERN admin dashboard with role-based access, real-time data management, and image handling.",
         image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/1.png",
         tags: ["React", "Node.js", "Express", "MongoDB", "ImageKit", "JWT"],
+        category: "full-stack",
         github: "",
         webapp: "https://gs-enterprises-git-6198c6-himanshuhaldar2000-gmailcoms-projects.vercel.app/",
     },
     {
-        id: 1,
-        title: "An AI-assisted research agent that fetches, summarizes, and prepares content for audio delivery. Created an automated workflow that aggregates data from reliable sources, summarizes it, and prepares audio-optimized content.",
-        date: "december 2025",
-        description: "An AI-assisted research agent that fetches, summarizes, and prepares content for audio delivery. Created an automated workflow that aggregates data from reliable sources, summarizes it, and prepares audio-optimized content.",
+        id: 4,
+        title: "AI Research Agent – Audio Content Pipeline",
+        date: "December 2025",
+        description: "An AI-assisted research agent that fetches, summarizes, and prepares content for audio delivery. Automated workflow aggregating data from reliable sources with audio-optimized content output.",
         image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/Screenshot%202026-01-06%20033325.png",
-        tags: ["N8N", "Perplexity API", "Gemini API", "Audio Processing", "Content Summarization", "Audio Optimization", "ElevenLabs API"],
+        tags: ["N8N", "Perplexity API", "Gemini API", "Audio Processing", "ElevenLabs API"],
+        category: "AI Web App",
         github: "",
         webapp: "",
     },
     {
-        id: 2,
+        id: 5,
         title: "Agriguide – Crop Recommendation System",
         date: "Feb 2025 – Apr 2025",
         description:
@@ -321,7 +365,7 @@ export const projects = [
         github: "https://github.com/Himansh-u2000/agriguide",
     },
     {
-        id: 3,
+        id: 6,
         title: "Blog Quote || A Blogging Platform",
         date: "May 2025",
         description:
@@ -333,7 +377,7 @@ export const projects = [
         webapp: "https://himanshuhaldar.tech",
     },
     {
-        id: 4,
+        id: 7,
         title: "Personality Prediction App",
         date: "Aug 2024 – Dec 2024",
         description:
@@ -345,7 +389,7 @@ export const projects = [
         webapp: "https://personality-prediction-ebon.vercel.app/",
     },
     {
-        id: 5,
+        id: 8,
         title: "HIP HOP Popularity Prediction",
         date: "Feb 2025 – May 2025",
         description:
@@ -356,34 +400,31 @@ export const projects = [
         github: "https://github.com/Himansh-u2000/AI",
     },
     {
-        id: 6,
+        id: 9,
         title: "Emerginet – Accident Alert App",
         date: "Jul 2024",
         description:
             "Mobile app built in Flutter to receive real-time alerts when nearby accidents are detected by a hardware device. Uses WebSocket and Google Maps API.",
-        // image: "https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png",
         tags: ["Flutter", "WebSocket", "Google Maps API", "Material UI"],
         category: "mobile app",
         github: "https://github.com/Himansh-u2000",
     },
     {
-        id: 7,
+        id: 10,
         title: "Notes App with Room DB",
         date: "Nov 2023",
         description:
             "Android notes application with Room Database for persistent storage, note editing, and deletion. Built using MVVM architecture.",
-        // image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/todo-app-thumbnail.png?updatedAt=1748631398480",
         tags: ["Kotlin", "Room Database", "MVVM", "Android Studio"],
         category: "android app",
         github: "https://github.com/Himansh-u2000/SimpleNotesWithRoom",
     },
     {
-        id: 8,
+        id: 11,
         title: "Pencil Sketch App",
         date: "May 2025",
         description:
             "Python-based utility to convert photos into pencil sketches using OpenCV and image processing filters.",
-        // image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/pencil-sketch-thumbnail.png?updatedAt=1748631111851",
         tags: ["Python", "OpenCV", "Image Processing"],
         category: "utility tool",
         github: "https://github.com/Himansh-u2000/pencilSketcchApp",
@@ -393,6 +434,7 @@ export const projects = [
 export const projectCategories = [
     "all",
     "full-stack",
+    "devops",
     "web app",
     "AI Web App",
     "mobile app",
