@@ -303,7 +303,7 @@ export const projects = [
         date: "2025",
         description:
             "Engineered a location-aware social platform with geospatial post recommendations using MongoDB 2dsphere indexes and geohash-based Redis caching, reducing API response times by ~60%. Features JWT & Google OAuth 2.0 auth, Redis-backed clap system with batch-sync to MongoDB (~90% less DB writes), infinite scroll, Stripe subscriptions, and Framer Motion animations.",
-        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/1.png",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/aa.png",
         tags: ["React.js", "Node.js", "Express.js", "MongoDB", "Redis", "Stripe", "Google OAuth 2.0"],
         category: "full-stack",
         github: "https://github.com/Himansh-u2000/tea-website",
@@ -314,7 +314,7 @@ export const projects = [
         date: "2025",
         description:
             "Published npm CLI tool automating full-stack deployment on Linux VPS (Ubuntu/Debian). Automates Nginx reverse proxy, PM2 process management, SSL/TLS via Let's Encrypt, and swap memory. Supports multi-stack detection (React SPA, Express, Next.js, monorepos), Git-based rollback, and zero-downtime redeployment via PM2 clusters.",
-        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/Screenshot%202026-01-06%20033325.png",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/11.png",
         tags: ["Node.js", "Bash", "Nginx", "PM2", "Certbot", "Let's Encrypt", "Linux"],
         category: "devops",
         github: "",
