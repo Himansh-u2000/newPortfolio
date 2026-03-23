@@ -303,7 +303,7 @@ export const projects = [
         date: "2025",
         description:
             "Engineered a location-aware social platform with geospatial post recommendations using MongoDB 2dsphere indexes and geohash-based Redis caching, reducing API response times by ~60%. Features JWT & Google OAuth 2.0 auth, Redis-backed clap system with batch-sync to MongoDB (~90% less DB writes), infinite scroll, Stripe subscriptions, and Framer Motion animations.",
-        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/aa.png",
+        image: "https://ik.imagekit.io/iyyolel10/portfolio-projects-thumbnail/tea-website/collage.jpg",
         tags: ["React.js", "Node.js", "Express.js", "MongoDB", "Redis", "Stripe", "Google OAuth 2.0"],
         category: "full-stack",
         github: "https://github.com/Himansh-u2000/tea-website",
@@ -318,7 +318,6 @@ export const projects = [
         tags: ["Node.js", "Bash", "Nginx", "PM2", "Certbot", "Let's Encrypt", "Linux"],
         category: "devops",
         github: "",
-        webapp: "https://www.npmjs.com/package/deploykit-cli",
     },
     {
         id: 2,
@@ -351,7 +350,6 @@ export const projects = [
         tags: ["N8N", "Perplexity API", "Gemini API", "Audio Processing", "ElevenLabs API"],
         category: "AI Web App",
         github: "",
-        webapp: "",
     },
     {
         id: 5,
@@ -374,7 +372,6 @@ export const projects = [
         tags: ["React", "Redux", "Appwrite", "Tailwind CSS"],
         category: "web app",
         github: "https://github.com/Himansh-u2000/megaProject",
-        webapp: "https://himanshuhaldar.tech",
     },
     {
         id: 7,
@@ -386,7 +383,6 @@ export const projects = [
         tags: ["React", "Gemini API", "Node.js", "D3.js", "Express"],
         category: "AI Web App",
         github: "https://github.com/Himansh-u2000/personality-prediction",
-        webapp: "https://personality-prediction-ebon.vercel.app/",
     },
     {
         id: 8,
