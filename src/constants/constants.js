@@ -15,7 +15,7 @@ export const Bio = {
         "https://drive.google.com/file/d/1h0CLSc1RG6e_7ukH7vyX5Zl8AS71eufw/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/himanshu-haldar-5b3830250",
     twitter: "https://x.com/HimanshuHaldar3",
-    email: "himansh.0197@gmail.com",
+    email: "web.himanshuhaldar@gmail.com",
     phone: "+91 63954 31297",
     website: "https://www.himanshuhaldar.online/",
 };
