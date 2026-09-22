@@ -12,7 +12,7 @@ export const Bio = {
         "Full-Stack Web Developer with hands-on experience in JavaScript, React.js, Node.js, Express.js, MongoDB, and Redis, specializing in building scalable web applications, RESTful APIs, and real-time systems. Proficient in cloud deployment (AWS, Linux VPS, Docker, Nginx) and workflow automation (n8n). Published NPM package author and Google Developer Groups On Campus Lead.",
     github: "https://github.com/Himansh-u2000/",
     resume:
-        "https://drive.google.com/file/d/1ljWXkxhDey0K9v7nafxmP14XfeUWE5_r/view?usp=sharing",
+        "https://drive.google.com/file/d/1wKAmhz2KeYStfnENIZxIBr-09ggZSPsV/view?usp=sharing",
     linkedin: "https://www.linkedin.com/in/himanshu-haldar-dev",
     twitter: "https://x.com/HimanshuHaldar3",
     email: "web.himanshuhaldar@gmail.com",
